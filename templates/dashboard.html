@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard de Asistencia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='logoMarisa.jpg') }}" alt="Logo Supérate Fundación Frech" class="logo">
+        <h2>Registro de Asistencia</h2>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('asistencia') }}" class="btn">Registrar Asistencia</a></li>
+            <li><a href="{{ url_for('descargar') }}" class="btn">Descargar Asistencia</a></li>
+            <li><a href="{{ url_for('logout') }}" class="btn-logout">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+    
+    {% if alertas %}
+    <div class="alert-box">
+        <h3>⚠️ Inconsistencias Encontradas:</h3>
+        {% for alerta in alertas %}
+            <p class="alert">{{ alerta }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <!-- Bloque: Asistencia Diaria (Desagregado por grado y sección con resumen de estados) -->
+    <section class="dashboard-section">
+        <h3>📅 Asistencia Diaria</h3>
+        {% if asistencia_total %}
+            <table>
+                <tr>
+                    <th>Grado</th>
+                    <th>Sección</th>
+                    <th>Presente</th>
+                    <th>Ausente</th>
+                    <th>Permiso</th>
+                    <th>En IE</th>
+                    <th>En Revisión</th>
+                    <th>Total</th>
+                </tr>
+                {% for row in asistencia_total %}
+                <tr>
+                    <td>{{ row['Grado'] }}</td>
+                    <td>{{ row['Sección'] }}</td>
+                    <td>{{ row['Presente'] if row['Presente'] is defined else 0 }}</td>
+                    <td>{{ row['Ausente'] if row['Ausente'] is defined else 0 }}</td>
+                    <td>{{ row['Permiso'] if row['Permiso'] is defined else 0 }}</td>
+                    <td>{{ row['En IE'] if row['En IE'] is defined else 0 }}</td>
+                    <td>{{ row['En Revisión'] if row['En Revisión'] is defined else 0 }}</td>
+                    <td>{{ row['Asistencias'] if row['Asistencias'] is defined else 0 }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No hay registros de asistencia para el día actual.</p>
+        {% endif %}
+    </section>
+    
+    <!-- Bloque: Indicadores Clave -->
+    <section class="dashboard-section">
+        <h3>📊 Indicadores Clave</h3>
+        <ul>
+            <li>👨‍🎓 Total de Alumnos: {{ indicadores['total_alumnos'] }}</li>
+            <li>🚨 Top 5 Ausencias:
+                <ul>
+                    {% for codigo, count in indicadores['top_ausentes'].items() %}
+                        <li>{{ codigo }} - {{ count }} ausencias</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li>📌 Profesores que no han pasado asistencia:
+                {% if indicadores['profesores_no_asistencia'] %}
+                    <ul>
+                        {% for prof in indicadores['profesores_no_asistencia'] %}
+                            <li>{{ prof }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <span>Todos los profesores han pasado asistencia o no se dispone de datos.</span>
+                {% endif %}
+            </li>
+        </ul>
+    </section>
+    
+    <!-- Bloque: Resumen General de Asistencia -->
+    <section class="dashboard-section">
+        <h3>📋 Resumen General de Asistencia</h3>
+        <table>
+            <tr>
+                <th>Grado</th>
+                <th>Sección</th>
+                <th>Total Asistencias</th>
+            </tr>
+            {% for row in asistencia_total %}
+            <tr>
+                <td>{{ row['Grado'] }}</td>
+                <td>{{ row['Sección'] }}</td>
+                <td>{{ row['Asistencias'] if row['Asistencias'] is defined else 0 }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+</body>
+</html>

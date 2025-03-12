@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Descargar Reportes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='logoMarisa.jpg') }}" alt="Logo Supérate Fundación Frech" class="logo">
+        <h2>Descargar Reportes de Asistencia</h2>
+    </header>
+
+    <form method="POST">
+        <label for="tipo_reporte">Seleccionar tipo de reporte:</label>
+        <select name="tipo_reporte" required>
+            <option value="">Seleccionar...</option>
+            <option value="listado_alumnos">Listado de Alumnos</option>
+            <option value="asistencia_trabajada">Asistencia Trabajada</option>
+            <option value="reporte_alumno">Reporte Individual de Alumno</option>
+        </select>
+
+        <label for="grado">Seleccionar Grado:</label>
+        <select name="grado">
+            <option value="">Todos</option>
+            <option value="Primero">Primero</option>
+            <option value="Segundo">Segundo</option>
+            <option value="Tercero">Tercero</option>
+        </select>
+
+        <label for="seccion">Seleccionar Sección:</label>
+        <select name="seccion">
+            <option value="">Todas</option>
+            <option value="AM">AM</option>
+            <option value="PM-A">PM-A</option>
+            <option value="PM-B">PM-B</option>
+        </select>
+
+        <!-- Nuevo filtro para el estado de la asistencia -->
+        <label for="estado">Seleccionar Estado:</label>
+        <select name="estado">
+            <option value="">Todos</option>
+            <option value="Presente">Presente</option>
+            <option value="Ausente">Ausente</option>
+            <option value="Permiso">Permiso</option>
+            <option value="En IE">En IE</option>
+            <option value="En Revisión">En Revisión</option>
+        </select>
+
+        <label for="fecha_inicio">Fecha de inicio:</label>
+        <input type="date" name="fecha_inicio">
+
+        <label for="fecha_fin">Fecha de fin:</label>
+        <input type="date" name="fecha_fin">
+
+        <label for="codigo">Código de alumno (para reporte individual):</label>
+        <input type="text" name="codigo" placeholder="Ejemplo: 07AA2701">
+
+        <button type="submit" class="btn">Generar Reporte</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('dashboard') }}" class="btn-back">Volver al Dashboard</a>
+</body>
+</html>

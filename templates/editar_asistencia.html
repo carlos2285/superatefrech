@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Registro de Asistencia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='logo_vistoso.jpg') }}" alt="Logo Supérate Fundación Frech" class="logo">
+        <h2>Editar Registro de Asistencia</h2>
+    </header>
+    <form method="POST">
+        <label for="estado">Estado:</label>
+        <select name="estado" required>
+            <option value="Presente" {% if registro.estado == 'Presente' %}selected{% endif %}>Presente</option>
+            <option value="Ausente" {% if registro.estado == 'Ausente' %}selected{% endif %}>Ausente</option>
+            <option value="Permiso" {% if registro.estado == 'Permiso' %}selected{% endif %}>Permiso</option>
+            <option value="En IE" {% if registro.estado == 'En IE' %}selected{% endif %}>En IE</option>
+            <option value="En Revisión" {% if registro.estado == 'En Revisión' %}selected{% endif %}>En Revisión</option>
+        </select>
+        <label for="fecha_ingresada">Fecha Ingresada:</label>
+        <input type="date" name="fecha_ingresada" value="{{ registro.fecha_ingresada.strftime('%Y-%m-%d') }}">
+        <button type="submit" class="btn">Actualizar Registro</button>
+    </form>
+    <br>
+    <a href="{{ url_for('dashboard') }}" class="btn-back">Volver al Dashboard</a>
+</body>
+</html>

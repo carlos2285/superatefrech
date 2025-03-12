@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Notas</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h2>Registrar Notas</h2>
+    
+    <form method="POST">
+        <label for="año">Año:</label>
+        <input type="number" name="año" required>
+        <br>
+
+        <label for="jornada">Jornada:</label>
+        <select name="jornada" required>
+            <option value="Diurna">Diurna</option>
+            <option value="Nocturna">Nocturna</option>
+        </select>
+        <br>
+
+        <label for="materia">Materia:</label>
+        <select name="materia" required>
+            <option value="Informática">Informática</option>
+            <option value="Valores">Valores</option>
+            <option value="Inglés">Inglés</option>
+        </select>
+        <br>
+
+        <button type="submit">Cargar Alumnos</button>
+    </form>
+
+    {% if alumnos %}
+    <form method="POST">
+        <input type="hidden" name="año" value="{{ año }}">
+        <input type="hidden" name="jornada" value="{{ jornada }}">
+        <input type="hidden" name="materia" value="{{ materia }}">
+
+        <table>
+            <tr>
+                <th>Alumno</th>
+                <th>Nota</th>
+            </tr>
+            {% for alumno in alumnos %}
+            <tr>
+                <td>{{ alumno.nombre }}</td>
+                <td><input type="number" name="nota_{{ alumno.id }}" required min="0" max="100"></td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <button type="submit">Guardar Notas</button>
+    </form>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('dashboard') }}">Volver al Dashboard</a>
+</body>
+</html>

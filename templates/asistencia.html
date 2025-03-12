@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Asistencia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <!-- Usamos url_for para generar la ruta correcta al logo -->
+        <img src="{{ url_for('static', filename='logoMarisa.jpg') }}" alt="Logo Supérate Fundación Frech" class="logo">
+        <h2>Registro de Asistencia</h2>
+    </header>
+
+    {% if session.username == 'admin' %}
+    <!-- Formulario para el administrador -->
+    <form method="POST">
+        <label for="fecha">Fecha ingresada por el profesor:</label>
+        <input type="date" name="fecha" required>
+
+        <label for="grado">Seleccionar Grado:</label>
+        <select name="grado" required>
+            <option value="">Seleccionar...</option>
+            <option value="Primero">Primero</option>
+            <option value="Segundo">Segundo</option>
+            <option value="Tercero">Tercero</option>
+        </select>
+
+        <label for="seccion">Seleccionar Sección:</label>
+        <select name="seccion" required>
+            <option value="">Seleccionar...</option>
+            <!-- Las opciones se actualizarán dinámicamente con JavaScript -->
+        </select>
+        
+        <button type="submit" class="btn">Cargar Alumnos</button>
+    </form>
+    {% else %}
+    <!-- Para profesores: Mostrar datos asignados (grado y sección) en modo de solo lectura -->
+    <form method="POST">
+        <input type="hidden" name="fecha" value="{{ fecha }}">
+        <input type="hidden" name="grado" value="{{ grado }}">
+        <input type="hidden" name="seccion" value="{{ seccion }}">
+        <p><strong>Fecha:</strong> {{ fecha }}</p>
+        <p><strong>Grado:</strong> {{ grado }}</p>
+        <p><strong>Sección:</strong> {{ seccion }}</p>
+        <button type="submit" class="btn">Cargar Alumnos</button>
+    </form>
+    {% endif %}
+
+    {% if alumnos %}
+    <h3>Lista de Alumnos</h3>
+    <form method="POST" action="{{ url_for('registrar_asistencia') }}">
+        <input type="hidden" name="fecha" value="{{ fecha }}">
+        <input type="hidden" name="grado" value="{{ grado }}">
+        <input type="hidden" name="seccion" value="{{ seccion }}">
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Estado</th>
+            </tr>
+            {% for alumno in alumnos %}
+            <tr>
+                <td>{{ alumno['Nombres'] }}</td>
+                <td>{{ alumno['Apellidos'] }}</td>
+                <td>
+                    <select name="estado_{{ alumno['Código'] }}" class="estado">
+                        <option value="Presente">✅ Presente</option>
+                        <option value="Ausente">❌ Ausente</option>
+                        <option value="Permiso">⏳ Permiso</option>
+                        <option value="En IE">🏫 En IE</option>
+                        <option value="En Revisión">🔎 En Revisión</option>
+                    </select>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button type="submit" class="btn">Guardar Asistencia</button>
+    </form>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('dashboard') }}" class="btn-back">Volver al Dashboard</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            {% if session.username == 'admin' %}
+            const gradoSelect = document.querySelector("select[name='grado']");
+            const seccionSelect = document.querySelector("select[name='seccion']");
+
+            function updateSeccionOptions() {
+                const grado = gradoSelect.value.toLowerCase().trim();
+                let options = '<option value="">Seleccionar...</option>';
+                if (grado === 'tercero') {
+                    // Para Tercero: las opciones disponibles son "AM" y "PM"
+                    options += '<option value="AM">AM</option>';
+                    options += '<option value="PM">PM</option>';
+                } else if (grado === 'primero' || grado === 'segundo') {
+                    // Para Primero y Segundo: las opciones disponibles son "AM", "PM-A" y "PM-B"
+                    options += '<option value="AM">AM</option>';
+                    options += '<option value="PM-A">PM-A</option>';
+                    options += '<option value="PM-B">PM-B</option>';
+                } else {
+                    // Si no se ha seleccionado un grado, se muestran todas las opciones
+                    options += '<option value="AM">AM</option>';
+                    options += '<option value="PM-A">PM-A</option>';
+                    options += '<option value="PM-B">PM-B</option>';
+                }
+                seccionSelect.innerHTML = options;
+            }
+
+            gradoSelect.addEventListener("change", updateSeccionOptions);
+            updateSeccionOptions(); // Inicializa las opciones al cargar la página
+            {% endif %}
+        });
+    </script>
+</body>
+</html>
