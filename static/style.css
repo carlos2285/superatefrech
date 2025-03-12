@@ -1,0 +1,199 @@
+/* General */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #FFFFFF;  /* Blanco */
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Encabezado con logo */
+header {
+    background-color: #00AEEF;  /* Celeste */
+    color: #FFFFFF;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+.logo {
+    position: absolute;
+    top: 15px;
+    left: 30px;
+    height: 60px;
+}
+
+h2 {
+    margin: 0;
+    font-size: 28px;
+}
+
+/* Barra de navegación */
+nav ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    background-color: #6EBB3B;  /* Verde */
+    margin: 0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    border-radius: 5px;
+    background-color: #6EBB3B;  /* Verde */
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+nav ul li a:hover {
+    background-color: #00AEEF;  /* Celeste en hover */
+    transform: scale(1.05);
+}
+
+/* Formularios */
+form {
+    background-color: #FFFFFF;  /* Blanco */
+    padding: 25px;
+    margin: 25px auto;
+    width: 90%;
+    max-width: 650px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.15);
+}
+
+form label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+form input, form select, form button {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+form button {
+    background-color: #6EBB3B;  /* Verde */
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+form button:hover {
+    background-color: #00AEEF;  /* Celeste */
+    transform: scale(1.05);
+}
+
+/* Tablas */
+table {
+    width: 95%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background-color: #FFFFFF;  /* Blanco */
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+    text-align: left;
+    padding: 12px;
+    font-size: 14px;
+}
+
+th {
+    background-color: #6EBB3B;  /* Verde */
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #F9F9F9;  /* Blanco ligeramente gris */
+}
+
+/* Alertas */
+.alert-box {
+    background-color: #E5F7EA;  /* Un fondo muy claro basado en verde/ blanco */
+    border-left: 8px solid #6EBB3B;  /* Verde */
+    padding: 18px;
+    margin: 25px auto;
+    width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.alert {
+    color: #333;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/* Secciones del dashboard */
+.dashboard-section {
+    background-color: #FFFFFF;  /* Blanco */
+    margin: 25px auto;
+    width: 90%;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Botones */
+.btn, .btn-logout, .btn-back {
+    display: inline-block;
+    padding: 12px 24px;
+    margin: 10px;
+    border-radius: 6px;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn {
+    background-color: #6EBB3B;  /* Verde */
+}
+
+.btn:hover {
+    background-color: #00AEEF;  /* Celeste */
+    transform: scale(1.05);
+}
+
+/* Para botón de logout, se usa igual */
+.btn-logout {
+    background-color: #6EBB3B;
+}
+
+.btn-logout:hover {
+    background-color: #00AEEF;
+    transform: scale(1.05);
+}
+
+.btn-back {
+    background-color: #6EBB3B;
+    text-align: center;
+}
+
+.btn-back:hover {
+    background-color: #00AEEF;
+    transform: scale(1.05);
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
